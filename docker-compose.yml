@@ -1,0 +1,18 @@
+services:
+  agent-canvas:
+    build: .
+    container_name: agent-canvas
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ~/.openhands:/home/openhands/.openhands
+      - ~/repos:/repos
+    environment:
+      - HOME=/home/openhands
+      - WORKSPACE_BASE=/repos
+      - LOG_ALL_EVENTS=true
+      - OH_PERSISTENCE_DIR=/home/openhands/.openhands
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
