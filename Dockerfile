@@ -16,9 +16,6 @@ RUN curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/in
 
 ENV PATH="/root/.local/bin:${PATH}"
 
-# Initialize RTK globally
-RUN mkdir -p /root/.claude /home/openhands/.claude && rtk init -g
-
 # Install gh-stack extension system-wide and symlink directly for root and openhands users
 RUN mkdir -p /usr/local/share/gh/extensions
 RUN git clone https://github.com/github/gh-stack /usr/local/share/gh/extensions/gh-stack
@@ -26,10 +23,9 @@ RUN mkdir -p /root/.config/gh/extensions /home/openhands/.config/gh/extensions
 RUN ln -sfn /usr/local/share/gh/extensions/gh-stack /root/.config/gh/extensions/gh-stack
 RUN ln -sfn /usr/local/share/gh/extensions/gh-stack /home/openhands/.config/gh/extensions/gh-stack
 
-# Ensure PATH, rtk initialization, and transparent rtk command wrapping persist across bash sessions
+# Ensure PATH and transparent rtk command wrapping persist across bash sessions (NO interactive init prompts)
 RUN echo 'export PATH="$HOME/.local/bin:$PATH"' >> /etc/bash.bashrc && \
     echo 'if command -v rtk >/dev/null 2>&1; then' >> /etc/bash.bashrc && \
-    echo '    rtk init -g || true' >> /etc/bash.bashrc && \
     echo '    git() { rtk git "$@"; }' >> /etc/bash.bashrc && \
     echo '    ls() { rtk ls "$@"; }' >> /etc/bash.bashrc && \
     echo '    pytest() { rtk pytest "$@"; }' >> /etc/bash.bashrc && \
