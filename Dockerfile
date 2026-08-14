@@ -28,7 +28,7 @@ RUN ln -sfn /usr/local/share/gh/extensions/gh-stack/gh-stack /usr/local/bin/gh-s
 
 WORKDIR /home/openhands
 
-# Ensure PATH and transparent rtk command wrapping persist across bash sessions
+# Ensure PATH and transparent rtk command wrapping persist across bash sessions (bypassing rtk for gh stack)
 RUN echo 'export PATH="$HOME/.local/bin:$PATH"' >> /etc/bash.bashrc && \
     echo 'if command -v rtk >/dev/null 2>&1; then' >> /etc/bash.bashrc && \
     echo '    git() { rtk git "$@"; }' >> /etc/bash.bashrc && \
@@ -40,5 +40,5 @@ RUN echo 'export PATH="$HOME/.local/bin:$PATH"' >> /etc/bash.bashrc && \
     echo '    cargo() { rtk cargo "$@"; }' >> /etc/bash.bashrc && \
     echo '    uv() { rtk uv "$@"; }' >> /etc/bash.bashrc && \
     echo '    pip() { rtk pip "$@"; }' >> /etc/bash.bashrc && \
-    echo '    gh() { rtk gh "$@"; }' >> /etc/bash.bashrc && \
+    echo '    gh() { if [ "$1" = "stack" ]; then command gh "$@"; else rtk gh "$@"; fi; }' >> /etc/bash.bashrc && \
     echo 'fi' >> /etc/bash.bashrc
