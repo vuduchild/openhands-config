@@ -8,10 +8,10 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ~/.openhands:/home/openhands/.openhands
-      - ~/repos:/repos
+      - ~/openhands-workspace:/workspace
     environment:
       - HOME=/home/openhands
-      - WORKSPACE_BASE=/repos
+      - WORKSPACE_BASE=/workspace
       - LOG_ALL_EVENTS=true
       - OH_PERSISTENCE_DIR=/home/openhands/.openhands
     extra_hosts:
