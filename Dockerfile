@@ -16,6 +16,12 @@ RUN curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/in
 
 ENV PATH="/root/.local/bin:${PATH}"
 
+# Install custom RTK filters for aggressive token reduction
+RUN mkdir -p /etc/rtk /root/.config/rtk /home/openhands/.config/rtk
+COPY .config/rtk/filters.toml /etc/rtk/filters.toml
+RUN cp /etc/rtk/filters.toml /root/.config/rtk/filters.toml && \
+    cp /etc/rtk/filters.toml /home/openhands/.config/rtk/filters.toml
+
 # Install gh-stack extension system-wide, build binary, and symlink for gh extension discovery
 RUN mkdir -p /usr/local/share/gh/extensions
 RUN git clone https://github.com/github/gh-stack /usr/local/share/gh/extensions/gh-stack

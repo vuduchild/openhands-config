@@ -12,7 +12,10 @@ services:
     environment:
       - HOME=/home/openhands
       - WORKSPACE_BASE=/workspace
-      - LOG_ALL_EVENTS=true
+      - LOG_ALL_EVENTS=false
+      - OH_MAX_MESSAGE_CHARS=10000
+      - OH_CONDENSE_HISTORY=true
+      - TEMPERATURE=0.2
       - OH_PERSISTENCE_DIR=/home/openhands/.openhands
     extra_hosts:
       - "host.docker.internal:host-gateway"

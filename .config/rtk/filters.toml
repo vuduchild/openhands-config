@@ -1,0 +1,16 @@
+[general]
+strip_ansi = true
+truncate_lines = 120
+max_output_lines = 40
+
+[tools.git]
+compact_status = true
+compact_diff = true
+
+[tools.npm]
+strip_lifecycle_scripts = true
+hide_up_to_date = true
+
+[tools.pytest]
+show_only_failures = true
+compact_traceback = true
